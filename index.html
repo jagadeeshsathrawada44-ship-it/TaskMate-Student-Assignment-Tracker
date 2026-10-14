@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple student assignment tracker to organize tasks and deadlines.">
+  <title>TaskMate | Student Assignment Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="TaskMate home">
+        <span class="brand-mark">T</span><span>TaskMate</span>
+      </a>
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-view="all"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="pending"><span>◷</span> Pending</button>
+        <button class="nav-item" data-view="completed"><span>✓</span> Completed</button>
+        <button class="nav-item" data-view="overdue"><span>!</span> Overdue</button>
+      </nav>
+      <div class="sidebar-note">
+        <div class="note-icon">✦</div>
+        <strong>Small steps add up.</strong>
+        <p>Keep your tasks visible and make progress one assignment at a time.</p>
+      </div>
+      <div class="sidebar-footer">WEB TECHNOLOGIES PROJECT<br><span>Student productivity workspace</span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="today-label">STUDENT WORKSPACE</p>
+          <h1 id="greeting">Your assignments</h1>
+          <p class="subtitle">Plan your work. Meet your deadlines. Feel in control.</p>
+        </div>
+        <button class="primary-btn" id="add-assignment-btn"><span>＋</span> Add assignment</button>
+      </header>
+
+      <section class="stats-grid" aria-label="Assignment statistics">
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">Total assignments</span><span class="stat-icon lavender">▦</span></div>
+          <div class="stat-value" id="total-count">0</div><p class="stat-foot">All tasks in your list</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">Pending</span><span class="stat-icon amber">◷</span></div>
+          <div class="stat-value" id="pending-count">0</div><p class="stat-foot">Still need your attention</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">Completed</span><span class="stat-icon mint">✓</span></div>
+          <div class="stat-value" id="completed-count">0</div><p class="stat-foot">Tasks you have finished</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">Overdue</span><span class="stat-icon rose">!</span></div>
+          <div class="stat-value" id="overdue-count">0</div><p class="stat-foot">Past due and not completed</p>
+        </article>
+      </section>
+
+      <section class="content-panel">
+        <div class="panel-heading">
+          <div><h2 id="list-heading">All assignments</h2><p id="list-subtitle">A clear view of everything you need to do.</p></div>
+          <div class="progress-wrap"><div class="progress-copy"><span>Overall progress</span><strong id="progress-text">0%</strong></div><div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div></div>
+        </div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input type="search" id="search-input" placeholder="Search title or subject..." aria-label="Search assignments"></label>
+          <select id="priority-filter" aria-label="Filter by priority"><option value="all">All priorities</option><option value="High">High priority</option><option value="Medium">Medium priority</option><option value="Low">Low priority</option></select>
+          <select id="sort-select" aria-label="Sort assignments"><option value="due-asc">Due date: earliest</option><option value="due-desc">Due date: latest</option><option value="priority">Priority: high first</option><option value="created">Recently added</option></select>
+        </div>
+        <div class="assignment-list" id="assignment-list" aria-live="polite"></div>
+        <div class="empty-state hidden" id="empty-state"><div class="empty-illustration">✓</div><h3>No assignments found</h3><p>Try changing your filters or add a new assignment.</p><button class="secondary-btn" id="empty-add-btn">＋ Add an assignment</button></div>
+      </section>
+      <footer class="page-footer">Made for focused study sessions <span>✦</span> Your data stays in this browser.</footer>
+    </main>
+  </div>
+
+  <dialog id="assignment-dialog" class="assignment-dialog">
+    <form id="assignment-form">
+      <div class="dialog-heading"><div><p class="eyebrow">TASK DETAILS</p><h2 id="dialog-title">Add assignment</h2></div><button type="button" class="icon-btn" id="close-dialog" aria-label="Close form">×</button></div>
+      <input type="hidden" id="assignment-id">
+      <label>Assignment title <span class="required">*</span><input id="title" name="title" required maxlength="90" placeholder="e.g. Design a portfolio website"></label>
+      <div class="form-row">
+        <label>Subject <span class="required">*</span><input id="subject" name="subject" required maxlength="50" placeholder="e.g. Web Technologies"></label>
+        <label>Due date <span class="required">*</span><input id="due-date" name="dueDate" type="date" required></label>
+      </div>
+      <div class="form-row">
+        <label>Priority<select id="priority" name="priority"><option>Medium</option><option>High</option><option>Low</option></select></label>
+        <label>Status<select id="status" name="status"><option>Pending</option><option>In Progress</option><option>Completed</option></select></label>
+      </div>
+      <label>Description<textarea id="description" name="description" rows="3" maxlength="400" placeholder="Add any instructions or notes (optional)"></textarea></label>
+      <p class="form-error hidden" id="form-error" role="alert"></p>
+      <div class="dialog-actions"><button type="button" class="secondary-btn" id="cancel-dialog">Cancel</button><button type="submit" class="primary-btn">Save assignment</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
